@@ -9,14 +9,14 @@
     "engines": {
         "gitbook": ">=2.4.0"
     },
-    "homepage": "https://github.com/CapitolFoundry/gitbook-plugin-dynamo",
+    "homepage": "https://github.com/DynamoDS/gitbook-plugin-dynamo",
     "repository": {
         "type": "git",
-        "url": "https://github.com/CapitolFoundry/gitbook-plugin-dynamo.git"
+        "url": "https://github.com/DynamoDS/gitbook-plugin-dynamo.git"
     },
     "license": "Apache-2.0",
     "bugs": {
-        "url": "https://github.com/CapitolFoundry/gitbook-plugin-dynamo/issues"
+        "url": "https://github.com/DynamoDS/gitbook-plugin-dynamo/issues"
     },
     "gitbook": {
         "properties": {
