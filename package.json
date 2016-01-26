@@ -1,0 +1,73 @@
+{
+    "name": "gitbook-plugin-dynamo",
+    "description": "Custom Dynamo Plugin",
+    "main": "index.js",
+    "version": "1.0.1",
+    "dependencies": {
+        "lodash": "^3.10.1"
+    },
+    "engines": {
+        "gitbook": ">=2.4.0"
+    },
+    "homepage": "https://github.com/CapitolFoundry/gitbook-plugin-dynamo",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/CapitolFoundry/gitbook-plugin-dynamo.git"
+    },
+    "license": "Apache-2.0",
+    "bugs": {
+        "url": "https://github.com/CapitolFoundry/gitbook-plugin-dynamo/issues"
+    },
+    "gitbook": {
+        "properties": {
+            "facebook": {
+                "type": "boolean",
+                "default": true,
+                "title": "Facebook"
+            },
+            "twitter": {
+                "type": "boolean",
+                "default": true,
+                "title": "Twitter"
+            },
+            "google": {
+                "type": "boolean",
+                "default": false,
+                "title": "Google"
+            },
+            "weibo": {
+                "type": "boolean",
+                "default": false,
+                "description": "Weibo"
+            },
+            "instapaper": {
+                "type": "boolean",
+                "default": false,
+                "description": "Instapaper"
+            },
+            "vk": {
+                "type": "boolean",
+                "default": false,
+                "description": "VK"
+            },
+            "all": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "default": ["facebook", "google", "twitter", "weibo", "instapaper"],
+                "uniqueItems": true
+            },
+            "customLinks": {
+                "type": "array",
+                "default": [],
+                "description": "custom"
+            },
+            "favicon": {
+                "type": "string",
+                "default": null,
+                "description": "favicon"
+            }
+        }
+    }
+}
