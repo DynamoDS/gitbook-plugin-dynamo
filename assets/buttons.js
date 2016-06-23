@@ -102,5 +102,17 @@ require(["gitbook", "lodash"], function(gitbook, _) {
                 }
             });
         });
+
+        // Create language switch drop down
+         var languages = opts.languages;
+         if (languages.length > 0) {
+                    gitbook.toolbar.createButton({
+                        icon: 'fa fa-language',
+                        label: 'lang',
+                        position: 'right',
+                        dropdown: [languages]
+                    });
+         }
+
     });
 });
