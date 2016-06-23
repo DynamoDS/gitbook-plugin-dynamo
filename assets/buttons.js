@@ -94,6 +94,7 @@ require(["gitbook", "lodash"], function(gitbook, _) {
             gitbook.toolbar.createButton({
                 icon: item.icon,
                 label: '',
+                text: item.text,
                 position: 'right',
                 onClick: function(e) {
                     e.preventDefault();
