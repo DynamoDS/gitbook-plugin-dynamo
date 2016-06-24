@@ -102,16 +102,54 @@ require(["gitbook", "lodash"], function(gitbook, _) {
                 }
             });
         });
+        
+        var currentLangUrl = '';
+        if (typeof opts.currentLanguage == 'object' && typeof opts.currentLanguage.url == 'string') {
+            currentLangUrl = opts.currentLanguage.url;
+        }
 
-        // Create language switch drop down
-         var languages = opts.languages;
-         if (languages.length > 0) {
-                    gitbook.toolbar.createButton({
-                        icon: 'fa fa-language',
-                        label: 'lang',
-                        position: 'right',
-                        dropdown: [languages]
-                    });
+        var languageMenu = _.chain(opts.languages)
+            .map(function(lang) {
+                var onClickFunction;
+                if ( /^https?:\/\//.exec(currentLangUrl) ) {
+                   onClickFunction = function(e) {
+                       e.preventDefault();
+                       var pageUri = location.href.substring(currentLangUrl.length,location.href.length);
+                       // with base url of current gitbook provided, directing to same page in the target language
+                       window.open(lang.url+pageUri)
+                   };
+                } else {
+                   onClickFunction = function(e) {
+                      e.preventDefault();
+                      // when no current base url provided, directing to target home page
+                      window.open(lang.url)
+                   };
+                }
+                return {
+                    text: lang.label,
+                    onClick: onClickFunction,
+                    url: lang.url
+                };
+            })
+            .compact()
+            .value();
+
+        // findout current base url
+        var switchLangLabel = '';
+        if (typeof opts.currentLanguage == 'object' && typeof opts.currentLanguage.switchLangLabel == 'string') {
+            switchLangLabel = opts.currentLanguage.switchLangLabel;
+        }
+
+        // Create language switch button with dropdown
+         if (languageMenu.length > 0) {
+            var switchLang = '';
+            gitbook.toolbar.createButton({
+                icon: 'fa fa-globe fa-lg',
+                label: 'lang',
+                text: switchLangLabel,
+                position: 'right',
+                dropdown: [languageMenu]
+            });
          }
 
     });
