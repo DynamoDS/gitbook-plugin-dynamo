@@ -2,7 +2,7 @@ require(["gitbook", "lodash"], function(gitbook, _) {
     var SITES = {
         'facebook': {
             'label': 'Facebook',
-            'icon': 'fa fa-facebook',
+            'icon': 'fa fa-facebook fa-lg',
             'onClick': function(e) {
                 e.preventDefault();
                 window.open("http://www.facebook.com/sharer/sharer.php?s=100&p[url]="+encodeURIComponent(location.href));
@@ -10,7 +10,7 @@ require(["gitbook", "lodash"], function(gitbook, _) {
         },
         'twitter': {
             'label': 'Twitter',
-            'icon': 'fa fa-twitter',
+            'icon': 'fa fa-twitter fa-lg',
             'onClick': function(e) {
                 e.preventDefault();
                 window.open("http://twitter.com/home?status="+encodeURIComponent(document.title+" "+location.href));
@@ -70,7 +70,7 @@ require(["gitbook", "lodash"], function(gitbook, _) {
         // Create main button with dropdown
         if (menu.length > 0) {
             gitbook.toolbar.createButton({
-                icon: 'fa fa-share-alt',
+                icon: 'fa fa-share-alt fa-lg',
                 label: 'Share',
                 position: 'right',
                 dropdown: [menu]
@@ -94,6 +94,7 @@ require(["gitbook", "lodash"], function(gitbook, _) {
             gitbook.toolbar.createButton({
                 icon: item.icon,
                 label: '',
+                text: item.text,
                 position: 'right',
                 onClick: function(e) {
                     e.preventDefault();
@@ -101,5 +102,56 @@ require(["gitbook", "lodash"], function(gitbook, _) {
                 }
             });
         });
+        
+        var currentLangUrl = '';
+        if (typeof opts.currentLanguage == 'object' && typeof opts.currentLanguage.url == 'string') {
+            currentLangUrl = opts.currentLanguage.url;
+        }
+
+        var languageMenu = _.chain(opts.languages)
+            .map(function(lang) {
+                var onClickFunction;
+                var currentUrlRegexp = new RegExp( location.href.replace('/','\/').replace('.','\.') );
+                if ( currentUrlRegexp.exec(currentLangUrl) ) {
+                   onClickFunction = function(e) {
+                       e.preventDefault();
+                       var pageUri = location.href.substring(currentLangUrl.length,location.href.length);
+                       // with base url of current gitbook provided, directing to same page in the target language
+                       window.open(lang.url+pageUri)
+                   };
+                } else {
+                   onClickFunction = function(e) {
+                      e.preventDefault();
+                      // when no current base url provided, directing to target home page
+                      window.open(lang.url)
+                   };
+                }
+                return {
+                    text: lang.label,
+                    onClick: onClickFunction,
+                    url: lang.url
+                };
+            })
+            .compact()
+            .value();
+
+        // findout current base url
+        var switchLangLabel = '';
+        if (typeof opts.currentLanguage == 'object' && typeof opts.currentLanguage.switchLangLabel == 'string') {
+            switchLangLabel = opts.currentLanguage.switchLangLabel;
+        }
+
+        // Create language switch button with dropdown
+         if (languageMenu.length > 0) {
+            var switchLang = '';
+            gitbook.toolbar.createButton({
+                icon: 'fa fa-language fa-lg',
+                label: 'lang',
+                text: switchLangLabel,
+                position: 'right',
+                dropdown: [languageMenu]
+            });
+         }
+
     });
 });
