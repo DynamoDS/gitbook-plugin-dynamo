@@ -111,8 +111,8 @@ require(["gitbook", "lodash"], function(gitbook, _) {
         var languageMenu = _.chain(opts.languages)
             .map(function(lang) {
                 var onClickFunction;
-                var currentUrlRegexp = new RegExp( location.href.replace('/','\/').replace('.','\.') );
-                if ( currentUrlRegexp.exec(currentLangUrl) ) {
+                var currentUrlRegexp = new RegExp( currentLangUrl.replace('/','\/').replace('.','\.') );
+                if ( currentLangUrl.length > 0 && currentUrlRegexp.exec(location.href) ) {
                    onClickFunction = function(e) {
                        e.preventDefault();
                        var pageUri = location.href.substring(currentLangUrl.length,location.href.length);
